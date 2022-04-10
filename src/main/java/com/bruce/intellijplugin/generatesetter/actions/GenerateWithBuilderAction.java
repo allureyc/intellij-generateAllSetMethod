@@ -16,16 +16,11 @@ package com.bruce.intellijplugin.generatesetter.actions;
 
 import com.bruce.intellijplugin.generatesetter.CommonConstants;
 import com.bruce.intellijplugin.generatesetter.GenerateAllHandlerAdapter;
-import com.bruce.intellijplugin.generatesetter.utils.PsiDocumentUtils;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +38,6 @@ public class GenerateWithBuilderAction extends GenerateAllSetterBase {
         });
     }
 
-
     @Override
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
         PsiClass localVarialbeContainingClass = GenerateAllSetterBase.getLocalVarialbeContainingClass(element);
@@ -51,14 +45,18 @@ public class GenerateWithBuilderAction extends GenerateAllSetterBase {
             if (method.getName().equals(CommonConstants.BUILDER_METHOD_NAME)) {
                 PsiType returnType = method.getReturnType();
                 PsiClass psiClass = PsiTypesUtil.getPsiClass(returnType);
-                StringBuilder builder = new StringBuilder(localVarialbeContainingClass.getQualifiedName() + ".builder()");
+                String[] splits = localVarialbeContainingClass.getQualifiedName().split("\\.");
+                int count = splits.length;
+                StringBuilder builder = new StringBuilder("\t\t" + splits[count - 1] + ".builder()\n");
                 for (PsiMethod psiClassMethod : psiClass.getMethods()) {
-                    if (!psiClassMethod.isConstructor() && !psiClassMethod.getName().equals("toString")
-                            && !psiClassMethod.getName().equals("build")) {
-                        builder.append("." + psiClassMethod.getName() + "()");
+
+                    if (!psiClassMethod.isConstructor() && !psiClassMethod.getName().equals("toString") && !psiClassMethod.getName().equals("build")) {
+                        builder.append("\t\t\t\t.").append(psiClassMethod.getName()).append("()\n");
                     }
                 }
-                builder.append(".build();");
+                builder.append("\t\t\t\t.build();\n");
+
+//                StringBuilder result = new StringBuilder(builder.toString().replace(";", " = ").replace("\n", ""));
 
                 // insert into the element.
                 Document document = PsiDocumentManager.getInstance(project).getDocument(element.getContainingFile());
@@ -74,7 +72,6 @@ public class GenerateWithBuilderAction extends GenerateAllSetterBase {
             }
         }
     }
-
 
     @NotNull
     @Override

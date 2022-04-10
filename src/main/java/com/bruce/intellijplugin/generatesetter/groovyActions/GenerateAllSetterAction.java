@@ -74,12 +74,12 @@ public class GenerateAllSetterAction extends PsiElementBaseIntentionAction {
     @NotNull
     @Override
     public String getFamilyName() {
-        return CommonConstants.GENERATE_SETTER_METHOD_NO_DEAULT_VALUE;
+        return CommonConstants.GENERATE_SETTER_METHOD_NO_DEFAULT_VALUE;
     }
 
     @Override
     public @NotNull String getText() {
-        return CommonConstants.GENERATE_SETTER_METHOD_NO_DEAULT_VALUE;
+        return CommonConstants.GENERATE_SETTER_METHOD_NO_DEFAULT_VALUE;
     }
 
     //获取当前psiVariable对应的psiClass
