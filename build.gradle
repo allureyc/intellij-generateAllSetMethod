@@ -15,8 +15,10 @@ buildscript {
     // https://github.com/JetBrains/gradle-intellij-plugin/ 关注开发插件版本
     dependencies {
         classpath "org.jetbrains.intellij.plugins:gradle-intellij-plugin:1.9.0"
+
     }
 }
+
 
 plugins {
     id 'java'
@@ -33,8 +35,8 @@ apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 //    需要来填写publish这块 类似
 //    publish {
@@ -64,6 +66,9 @@ intellij {
 }
 
 dependencies {
+
+    // https://mvnrepository.com/artifact/uk.com.robust-it/cloning
+    implementation group: 'uk.com.robust-it', name: 'cloning', version: '1.9.12'
     testCompile group: 'junit', name: 'junit', version: '4.11'
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'

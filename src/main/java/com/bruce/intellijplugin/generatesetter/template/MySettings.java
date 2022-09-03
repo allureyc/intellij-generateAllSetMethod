@@ -14,11 +14,9 @@
 
 package com.bruce.intellijplugin.generatesetter.template;
 
-
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.rits.cloning.Cloner;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;

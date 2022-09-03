@@ -14,12 +14,12 @@
 
 package generateAllSetter;
 
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 /**
  * @author bruce ge
  */
-public abstract class BaseTest extends LightCodeInsightFixtureTestCase {
+public abstract class BaseTest extends BasePlatformTestCase {
 
     @Override
     protected void setUp() throws Exception {
